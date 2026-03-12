@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Bicol University CSC Design System */
+
+@layer base {
+  :root {
+    /* Gradient background - orange left to blue right */
+    --background: 199 92% 52%;
+    --background-gradient: linear-gradient(to right, hsl(27, 95%, 45%), hsl(220, 50%, 35%), hsl(199, 85%, 42%));
+    --foreground: 0 0% 100%;
+
+    /* White cards */
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 25%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 20% 25%;
+
+    /* BU Blue Primary */
+    --primary: 199 85% 42%;
+    --primary-foreground: 0 0% 100%;
+
+    /* BU Orange Secondary */
+    --secondary: 27 95% 53%;
+    --secondary-foreground: 0 0% 100%;
+
+    /* Muted light blue */
+    --muted: 199 60% 85%;
+    --muted-foreground: 199 40% 35%;
+
+    /* Orange accent */
+    --accent: 27 95% 53%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Maroon from CSC logo */
+    --maroon: 0 30% 43%;
+    --maroon-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 199 30% 80%;
+    --input: 0 0% 100%;
+    --ring: 199 85% 42%;
+
+    --radius: 1rem;
+
+    /* Stakeholder card colors */
+    --stakeholder-blue: 199 75% 55%;
+    --stakeholder-orange: 27 95% 53%;
+    --stakeholder-blue-light: 199 60% 70%;
+
+    /* Decorative background */
+    --bg-decoration: 199 70% 60%;
+  }
+
+  .dark {
+    --background: 220 25% 10%;
+    --foreground: 0 0% 95%;
+
+    --card: 220 20% 15%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 220 20% 15%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 199 85% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 27 95% 53%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 220 20% 20%;
+    --muted-foreground: 220 10% 60%;
+
+    --accent: 27 95% 53%;
+    --accent-foreground: 0 0% 100%;
+
+    --maroon: 0 30% 50%;
+    --maroon-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 20% 25%;
+    --input: 220 20% 20%;
+    --ring: 199 85% 50%;
+
+    --stakeholder-blue: 199 70% 45%;
+    --stakeholder-orange: 27 90% 50%;
+    --stakeholder-blue-light: 199 50% 35%;
+
+    --bg-decoration: 220 20% 18%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply text-foreground font-sans antialiased;
+    font-family: 'Poppins', sans-serif;
+    background: var(--background-gradient);
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  .stakeholder-card {
+    @apply rounded-2xl p-6 text-center transition-all duration-300 cursor-pointer;
+    @apply hover:scale-105 hover:shadow-xl;
+  }
+
+  .stakeholder-card-blue {
+    @apply bg-[hsl(var(--stakeholder-blue))] text-white;
+  }
+
+  .stakeholder-card-orange {
+    @apply bg-[hsl(var(--secondary))] text-white;
+  }
+
+  .bg-decoration {
+    @apply absolute rounded-3xl opacity-20;
+    background: hsl(0 0% 100% / 0.15);
+  }
+
+  .login-input {
+    @apply w-full px-4 py-3 rounded-lg border border-border bg-input text-card-foreground;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent;
+    @apply placeholder:text-muted-foreground;
+  }
+
+  .login-button {
+    @apply w-full py-3 rounded-lg font-semibold text-white transition-all duration-200;
+    @apply bg-[hsl(var(--primary))] hover:bg-[hsl(199,85%,35%)];
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary;
+  }
+}
+
+@layer utilities {
+  .gradient-maroon-orange {
+    background: linear-gradient(135deg, hsl(var(--maroon)) 0%, hsl(var(--secondary)) 100%);
+  }
+}
