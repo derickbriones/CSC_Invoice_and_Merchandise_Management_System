@@ -12,12 +12,10 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen relative flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-page relative flex items-center justify-center p-4">
       <BackgroundDecorations />
       
-      {/* Main Card */}
       <div className="relative z-10 w-full max-w-2xl bg-card rounded-3xl shadow-2xl p-8 sm:p-12 animate-fade-in">
-        {/* Logo and Header */}
         <div className="flex flex-col items-center mb-8">
           <img 
             src={cscLogo} 
@@ -32,12 +30,10 @@ const Index = () => {
           </p>
         </div>
 
-        {/* Description */}
         <p className="text-center text-muted-foreground text-sm mb-8 max-w-md mx-auto">
           Select your role to access the system. Manage invoices, merchandise, and transactions efficiently.
         </p>
 
-        {/* Stakeholder Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 max-w-lg mx-auto">
           <StakeholderCard
             icon={GraduationCap}
@@ -65,7 +61,6 @@ const Index = () => {
           />
         </div>
 
-        {/* Footer */}
         <p className="text-center text-xs text-muted-foreground">
           © 2026 Bicol University. All rights reserved.
         </p>
