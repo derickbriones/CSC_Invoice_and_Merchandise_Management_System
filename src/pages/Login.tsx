@@ -11,24 +11,9 @@ import type { Database } from '@/integrations/supabase/types';
 type AppRole = Database['public']['Enums']['app_role'];
 
 const roleConfig = {
-  student: {
-    title: 'Student',
-    icon: GraduationCap,
-    description: 'Access merchandise and view your orders',
-    dashboardPath: '/student',
-  },
-  staff: {
-    title: 'CSC Staff / Finance Team',
-    icon: Wallet,
-    description: 'Manage invoices and inventory',
-    dashboardPath: '/staff',
-  },
-  admin: {
-    title: 'System Administrator',
-    icon: Settings,
-    description: 'Full system access and management',
-    dashboardPath: '/admin',
-  },
+  student: { title: 'Student', icon: GraduationCap, description: 'Access merchandise and view your orders', dashboardPath: '/student' },
+  staff: { title: 'CSC Staff / Finance Team', icon: Wallet, description: 'Manage invoices and inventory', dashboardPath: '/staff' },
+  admin: { title: 'System Administrator', icon: Settings, description: 'Full system access and management', dashboardPath: '/admin' },
 };
 
 const Login = () => {
@@ -52,33 +37,14 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!email || !password) {
-      toast.error('Please fill in email and password');
-      return;
-    }
-
-    if (isSignUp && (!firstName || !lastName)) {
-      toast.error('Please fill in your name');
-      return;
-    }
-
+    if (!email || !password) { toast.error('Please fill in email and password'); return; }
+    if (isSignUp && (!firstName || !lastName)) { toast.error('Please fill in your name'); return; }
     setIsLoading(true);
 
     if (isSignUp) {
-      const { error } = await signUp(
-        email, password, firstName, lastName,
-        role as AppRole,
-        studentId || undefined,
-        yearLevel ? parseInt(yearLevel) : undefined,
-        course || undefined
-      );
+      const { error } = await signUp(email, password, firstName, lastName, role as AppRole, studentId || undefined, yearLevel ? parseInt(yearLevel) : undefined, course || undefined);
       if (error) {
-        if (error.message?.includes('already registered')) {
-          toast.error('This email is already registered. Please sign in.');
-        } else {
-          toast.error(error.message || 'Sign up failed');
-        }
+        toast.error(error.message?.includes('already registered') ? 'This email is already registered. Please sign in.' : error.message || 'Sign up failed');
       } else {
         toast.success('Account created! Please check your email to verify, then sign in.');
         setIsSignUp(false);
@@ -89,20 +55,11 @@ const Login = () => {
         toast.error(error.message || 'Sign in failed');
       } else {
         toast.success('Welcome back!');
-        // Fetch actual user roles to navigate to correct dashboard
         const { data: { user: signedInUser } } = await supabase.auth.getUser();
         if (signedInUser) {
-          const { data: userRoles } = await supabase
-            .from('user_roles')
-            .select('role')
-            .eq('user_id', signedInUser.id);
+          const { data: userRoles } = await supabase.from('user_roles').select('role').eq('user_id', signedInUser.id);
           const actualRole = userRoles?.[0]?.role;
-          const dashboardMap: Record<string, string> = {
-            student: '/student',
-            staff: '/staff',
-            admin: '/admin',
-          };
-          navigate(dashboardMap[actualRole || ''] || '/student');
+          navigate({ student: '/student', staff: '/staff', admin: '/admin' }[actualRole || ''] || '/student');
         } else {
           navigate(config.dashboardPath);
         }
@@ -112,14 +69,11 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen relative flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-page relative flex items-center justify-center p-4">
       <BackgroundDecorations />
       
       <div className="relative z-10 w-full max-w-md bg-card rounded-3xl shadow-2xl p-8 animate-fade-in">
-        <Link 
-          to="/"
-          className="inline-flex items-center gap-2 text-muted-foreground hover:text-card-foreground transition-colors mb-6"
-        >
+        <Link to="/" className="inline-flex items-center gap-2 text-muted-foreground hover:text-card-foreground transition-colors mb-6">
           <ArrowLeft className="w-4 h-4" />
           <span className="text-sm">Back to role selection</span>
         </Link>
@@ -198,7 +152,7 @@ const Login = () => {
         </p>
 
         <p className="text-center text-xs text-muted-foreground mt-4">
-          Need help? Contact the IT Department
+          <span className="font-bold">Need help?</span> Contact us!
         </p>
       </div>
     </div>
