@@ -1,100 +1,119 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Bicol University CSC Design System */
+/* iBU-Inspired Design System — Navy & Orange */
 
 @layer base {
   :root {
-    /* Gradient background - orange left to blue right */
-    --background: 199 92% 52%;
-    --background-gradient: linear-gradient(to right, hsl(27, 95%, 45%), hsl(220, 50%, 35%), hsl(199, 85%, 42%));
-    --foreground: 0 0% 100%;
+    /* Background */
+    --background: 220 20% 96%;
+    --background-gradient: linear-gradient(135deg, hsl(220, 60%, 18%) 0%, hsl(215, 55%, 28%) 40%, hsl(25, 90%, 50%) 100%);
+    --foreground: 220 25% 15%;
 
-    /* White cards */
+    /* Cards */
     --card: 0 0% 100%;
-    --card-foreground: 220 20% 25%;
+    --card-foreground: 220 25% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 25%;
+    --popover-foreground: 220 25% 15%;
 
-    /* BU Blue Primary */
-    --primary: 199 85% 42%;
+    /* Navy Blue Primary */
+    --primary: 220 65% 24%;
     --primary-foreground: 0 0% 100%;
 
-    /* BU Orange Secondary */
-    --secondary: 27 95% 53%;
+    /* Orange Accent */
+    --secondary: 25 92% 52%;
     --secondary-foreground: 0 0% 100%;
 
-    /* Muted light blue */
-    --muted: 199 60% 85%;
-    --muted-foreground: 199 40% 35%;
+    /* Muted */
+    --muted: 220 15% 92%;
+    --muted-foreground: 220 10% 45%;
 
-    /* Orange accent */
-    --accent: 27 95% 53%;
+    /* Accent */
+    --accent: 25 92% 52%;
     --accent-foreground: 0 0% 100%;
 
-    /* Maroon from CSC logo */
-    --maroon: 0 30% 43%;
+    /* Maroon */
+    --maroon: 0 40% 35%;
     --maroon-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 199 30% 80%;
-    --input: 0 0% 100%;
-    --ring: 199 85% 42%;
+    --border: 220 15% 88%;
+    --input: 220 15% 95%;
+    --ring: 220 65% 24%;
 
-    --radius: 1rem;
+    --radius: 0.75rem;
 
-    /* Stakeholder card colors */
-    --stakeholder-blue: 199 75% 55%;
-    --stakeholder-orange: 27 95% 53%;
-    --stakeholder-blue-light: 199 60% 70%;
+    /* Stakeholder */
+    --stakeholder-blue: 220 60% 30%;
+    --stakeholder-orange: 25 92% 52%;
+    --stakeholder-blue-light: 215 50% 45%;
 
-    /* Decorative background */
-    --bg-decoration: 199 70% 60%;
+    --bg-decoration: 220 50% 30%;
+
+    /* Sidebar */
+    --sidebar-background: 220 60% 18%;
+    --sidebar-foreground: 220 15% 85%;
+    --sidebar-primary: 25 92% 52%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 50% 25%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 220 40% 25%;
+    --sidebar-ring: 25 92% 52%;
   }
 
   .dark {
-    --background: 220 25% 10%;
-    --foreground: 0 0% 95%;
+    --background: 220 25% 8%;
+    --background-gradient: linear-gradient(135deg, hsl(220, 40%, 8%) 0%, hsl(220, 30%, 14%) 50%, hsl(25, 60%, 18%) 100%);
+    --foreground: 220 10% 90%;
 
-    --card: 220 20% 15%;
-    --card-foreground: 0 0% 95%;
+    --card: 220 25% 12%;
+    --card-foreground: 220 10% 90%;
 
-    --popover: 220 20% 15%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 220 25% 12%;
+    --popover-foreground: 220 10% 90%;
 
-    --primary: 199 85% 50%;
+    --primary: 215 60% 50%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 27 95% 53%;
+    --secondary: 25 85% 55%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 220 20% 20%;
-    --muted-foreground: 220 10% 60%;
+    --muted: 220 20% 18%;
+    --muted-foreground: 220 10% 55%;
 
-    --accent: 27 95% 53%;
+    --accent: 25 85% 55%;
     --accent-foreground: 0 0% 100%;
 
-    --maroon: 0 30% 50%;
+    --maroon: 0 35% 45%;
     --maroon-foreground: 0 0% 100%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 62% 40%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 220 20% 25%;
-    --input: 220 20% 20%;
-    --ring: 199 85% 50%;
+    --border: 220 20% 20%;
+    --input: 220 20% 16%;
+    --ring: 215 60% 50%;
 
-    --stakeholder-blue: 199 70% 45%;
-    --stakeholder-orange: 27 90% 50%;
-    --stakeholder-blue-light: 199 50% 35%;
+    --stakeholder-blue: 215 50% 40%;
+    --stakeholder-orange: 25 80% 50%;
+    --stakeholder-blue-light: 215 40% 30%;
 
-    --bg-decoration: 220 20% 18%;
+    --bg-decoration: 220 20% 14%;
+
+    --sidebar-background: 220 30% 10%;
+    --sidebar-foreground: 220 10% 75%;
+    --sidebar-primary: 25 85% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 25% 16%;
+    --sidebar-accent-foreground: 220 10% 85%;
+    --sidebar-border: 220 20% 16%;
+    --sidebar-ring: 25 85% 55%;
   }
 }
 
@@ -104,10 +123,15 @@
   }
 
   body {
-    @apply text-foreground font-sans antialiased;
-    font-family: 'Poppins', sans-serif;
-    background: var(--background-gradient);
+    @apply text-foreground antialiased;
+    font-family: 'Inter', sans-serif;
+    background: hsl(var(--background));
     min-height: 100vh;
+  }
+
+  /* Landing & Login pages use gradient */
+  .bg-gradient-page {
+    background: var(--background-gradient);
   }
 }
 
@@ -126,20 +150,21 @@
   }
 
   .bg-decoration {
-    @apply absolute rounded-3xl opacity-20;
-    background: hsl(0 0% 100% / 0.15);
+    @apply absolute rounded-3xl opacity-15;
+    background: hsl(0 0% 100% / 0.1);
   }
 
   .login-input {
-    @apply w-full px-4 py-3 rounded-lg border border-border bg-input text-card-foreground;
-    @apply focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent;
-    @apply placeholder:text-muted-foreground;
+    @apply w-full px-4 py-3 rounded-xl border border-border bg-input text-card-foreground;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary;
+    @apply placeholder:text-muted-foreground transition-all duration-200;
   }
 
   .login-button {
-    @apply w-full py-3 rounded-lg font-semibold text-white transition-all duration-200;
-    @apply bg-[hsl(var(--primary))] hover:bg-[hsl(199,85%,35%)];
+    @apply w-full py-3 rounded-xl font-semibold text-white transition-all duration-200;
+    @apply bg-primary hover:bg-primary/90;
     @apply focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary;
+    @apply shadow-lg shadow-primary/20;
   }
 }
 
