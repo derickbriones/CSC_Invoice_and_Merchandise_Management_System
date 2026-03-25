@@ -4,7 +4,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { CreditCard, Banknote, Globe, Building2, FileText, Upload, Printer } from 'lucide-react';
+import { Banknote, Globe, Building2, FileText, Upload, Printer } from 'lucide-react';
 import { toast } from 'sonner';
 import type { Tables, Database } from '@/integrations/supabase/types';
 import { generatePdfReceipt } from '@/utils/generatePdfReceipt';
@@ -19,18 +19,23 @@ const StudentPayFee = () => {
   const [proofFile, setProofFile] = useState<File | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [qrCodeUrl, setQrCodeUrl] = useState<string | null>(null);
-
-  const currentYear = `${new Date().getFullYear()}-${new Date().getFullYear() + 1}`;
+  const [academicYear, setAcademicYear] = useState('');
+  const [feeAmount, setFeeAmount] = useState(100);
 
   useEffect(() => {
     if (!user) return;
     const fetchData = async () => {
       const [paymentsRes, settingsRes] = await Promise.all([
         supabase.from('csc_fee_payments').select('*').eq('user_id', user.id).order('created_at', { ascending: false }),
-        supabase.from('system_settings').select('value').eq('key', 'payment_qr_code_url').single(),
+        supabase.from('system_settings').select('key, value'),
       ]);
       setPayments(paymentsRes.data || []);
-      setQrCodeUrl(settingsRes.data?.value || null);
+      const settings = settingsRes.data || [];
+      setQrCodeUrl(settings.find(s => s.key === 'payment_qr_code_url')?.value || null);
+      const ayVal = settings.find(s => s.key === 'academic_year')?.value;
+      setAcademicYear(ayVal || `${new Date().getFullYear()}-${new Date().getFullYear() + 1}`);
+      const feeVal = settings.find(s => s.key === 'csc_fee_amount')?.value;
+      setFeeAmount(feeVal ? parseFloat(feeVal) : 100);
     };
     fetchData();
   }, [user]);
@@ -62,8 +67,8 @@ const StudentPayFee = () => {
 
     const { error } = await supabase.from('csc_fee_payments').insert({
       user_id: user.id,
-      academic_year: currentYear,
-      amount: 100.00,
+      academic_year: academicYear,
+      amount: feeAmount,
       payment_method: selectedMethod,
       reference_number: refNumber || null,
       payment_proof_url: proofUrl,
@@ -102,11 +107,11 @@ const StudentPayFee = () => {
     });
   };
 
-  const statusColor = (status: string) => {
+  const statusBadge = (status: string) => {
     switch (status) {
-      case 'approved': return 'bg-green-100 text-green-800';
-      case 'rejected': return 'bg-red-100 text-red-800';
-      default: return 'bg-yellow-100 text-yellow-800';
+      case 'approved': return <Badge className="bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/20">Approved</Badge>;
+      case 'rejected': return <Badge className="bg-red-500/15 text-red-600 dark:text-red-400 border-red-500/20">Rejected</Badge>;
+      default: return <Badge className="bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/20">Pending</Badge>;
     }
   };
 
@@ -123,8 +128,8 @@ const StudentPayFee = () => {
       {/* Payment Form */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">CSC Fee for A.Y. {currentYear}</CardTitle>
-          <p className="text-sm text-muted-foreground">Amount: ₱100.00</p>
+          <CardTitle className="text-lg">CSC Fee for A.Y. {academicYear}</CardTitle>
+          <p className="text-sm text-muted-foreground">Amount: ₱{feeAmount.toFixed(2)}</p>
         </CardHeader>
         <CardContent className="space-y-4">
           {/* QR Code Display */}
@@ -229,12 +234,18 @@ const StudentPayFee = () => {
                   <div>
                     <p className="text-sm font-medium text-card-foreground">A.Y. {p.academic_year}</p>
                     <p className="text-xs text-muted-foreground capitalize">{p.payment_method.replace('_', ' ')} • ₱{p.amount.toFixed(2)}</p>
-                    {p.receipt_number && (
+                    {p.payment_status === 'approved' && p.receipt_number && (
                       <p className="text-xs text-primary font-mono mt-1">Receipt: {p.receipt_number}</p>
+                    )}
+                    {p.payment_status === 'pending' && (
+                      <p className="text-xs text-amber-600 dark:text-amber-400 mt-1">Awaiting staff approval...</p>
+                    )}
+                    {p.payment_status === 'rejected' && (
+                      <p className="text-xs text-red-600 dark:text-red-400 mt-1">Payment was rejected. Please contact CSC office.</p>
                     )}
                   </div>
                   <div className="flex items-center gap-2">
-                    <Badge className={statusColor(p.payment_status)}>{p.payment_status}</Badge>
+                    {statusBadge(p.payment_status)}
                     {p.payment_status === 'approved' && p.receipt_number && (
                       <Button size="sm" variant="outline" onClick={() => printReceipt(p)}>
                         <Printer className="w-4 h-4 mr-1" /> Print
